@@ -76,8 +76,30 @@ const appendPageLinks = (list, num) => {
 }
 
 
+// ========== EXCEEDS EXPECTATIONS SECTION ========== //
+const appendSearch = () => {
+   const pageHeader = document.querySelector('.page-header');      // grab page header div
+   const searchBar = document.createElement('input');              // create input element
+   searchBar.type = 'text';                                        // set input type
+   searchBar.className = 'student-search';                         // set id
+   searchBar.placeholder = 'Search for a student!';                // set placeholder
+   pageHeader.appendChild(searchBar);                              // append searchBar to pageHeader
+
+   const searchButton = document.createElement('button');     // create search button
+   searchButton.className = 'student-search';
+   searchButton.textContent = 'SEARCH';
+   searchBar.insertAdjacentElement('beforebegin', searchButton);
+   console.log(searchBar);
+}
+
+const filter = () => {
+   
+}
+
+
 // ========== FUNCTION CALLS ========== //
 showPage(studentList, 1);
 appendPageLinks(studentList, showItems);
+appendSearch();
 
 });
