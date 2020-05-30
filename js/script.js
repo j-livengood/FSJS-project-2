@@ -2,26 +2,76 @@
 Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
-   
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+
+// ========== LOAD HTML FIRST ========== //
+window.addEventListener('DOMContentLoaded', () => {
+
+
+// ========== GLOBAL VARIABLES ========== //
+const studentList = document.querySelectorAll('.student-item'); // grab list of students
+const showItems = 10; // show 10 students
+
+
+// ========== FUNCTIONS ========== //
+   // list is studentListItems
+   // page is the current page
+const showPage = (list, page) => {
+   const startIndex = (page * showItems) - showItems;
+   const endIndex = page * showItems;
+
+   // loop over items in student list
+   for (let i = 0; i < list.length; i++) {
+      // check if index of list item is between
+      // startIndex and endIndex
+         // if yes, set display to empty string
+      if (i >= startIndex && i < endIndex) {
+         list[i].style.display = '';
+         // if no, set display to none
+      } else {
+         list[i].style.display = 'none';
+      }
+   }
+}
 
 
 /*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
+   Create the `appendPageLinks function` to generate, append, and add 
+   functionality to the pagination buttons.
 ***/
-const listItem = '';
-const showItems = 10;
+
+
+
+// ========== FUNCTION CALLS ========== //
+showPage(studentListItems, 1);
+
+});
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// FROM LINE 15:
 /*** 
    Create the `showPage` function to hide all of the items in the 
    list except for the ten you want to show.
@@ -40,13 +90,34 @@ const showItems = 10;
 
 
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
 
 
 
 
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+
+// const appendPageLinks = (list) => {
+//    const numOfPages = Math.ceil(list.length/showItems);
+//    const pagiDivParent = document.querySelector('.page');
+//    const pagiDiv = document.createElement('div');
+//    pagiDivParent.appendChild(pagiDiv);
+//    pagiDiv.className = 'pagination';
+
+//    const pagiDivUl = document.createElement('ul');
+//    pagiDiv.appendChild(pagiDivUl);
+
+//    for (let i = 0; i < numOfPages; i++) {
+//       const pagiDivLi = document.createElement('li');
+//       pagiDivUl.appendChild(pagiDivLi);
+
+//       const pagiDivAnchor = document.createElement('a');
+//       pagiDivAnchor.setAttribute('href', '#')
+//       pagiDivAnchor.textContent = i + 1;
+//       pagiDivLi.appendChild(pagiDivAnchor);
+
+//       pageBody.addEventListener('click', (e) => {
+//          const buttons = document.querySelectorAll('a');
+//          showPage(studentListItems, i);
+//       });
+//    };
+// }
