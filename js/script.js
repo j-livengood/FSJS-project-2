@@ -38,11 +38,61 @@ const showPage = (list, page) => {
    Create the `appendPageLinks function` to generate, append, and add 
    functionality to the pagination buttons.
 ***/
+const appendPageLinks = () => {
+   // grab div.page to append div.pagination
+   const page = document.querySelector('.page');
+   
+   // create pagination div
+   // set class on paginationDiv
+   // append div to page
+   const paginationDiv = document.createElement('div');
+   paginationDiv.className = 'pagination';
+   page.appendChild(paginationDiv);
 
+   // create ul for div
+   // append ul to div
+   const paginationList = document.createElement('ul');
+   paginationDiv.appendChild(paginationList);
+
+   // determine how many pages are needed
+   // number of items / number of items to show = number of pages
+   // (example) 50 / 10 = 5 
+   const numOfPages = Math.ceil(studentList.length/showItems);
+
+   // create loop to determine number of list items
+   for (let i = 0; i < numOfPages; i++) {
+      // create li for ul
+      // append li to ul
+      const paginationListItem = document.createElement('li');
+      paginationList.appendChild(paginationListItem);
+
+      // create anchor for li
+      // set text content of anchor
+      // set href attribute of anchor
+      // append anchor to li
+      const paginationListItemAnchor = document.createElement('a');
+      paginationListItemAnchor.textContent = i + 1;
+      paginationListItemAnchor.setAttribute('href', '#');
+      paginationListItem.appendChild(paginationListItemAnchor);
+
+      console.log(i);
+   }
+
+   // add click listener to each anchor
+   page.addEventListener('click', (e) => {
+      console.log(e.target);
+      if (e.target === 'a') {
+         console.log('clicked');
+      }
+   })
+   
+   console.log(numOfPages);
+}
 
 
 // ========== FUNCTION CALLS ========== //
-showPage(studentListItems, 1);
+showPage(studentList, 1);
+appendPageLinks();
 
 });
 
