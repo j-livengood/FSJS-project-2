@@ -22,16 +22,24 @@ const showPage = (list, page) => {
    for (let i = 0; i < list.length; i++) {         // loop over items in student list
       if (i >= startIndex && i < endIndex) {       // check if index of list item is between startIndex and endIndex
          list[i].style.display = '';               // if yes, set display to empty string
-      } else {
+      } else {                                     // else
          list[i].style.display = 'none';           // if no, set display to none
       }
    }
 }
 
+   // function to remove pagination div to be replaced
+const divRemoval = (name) => {
+   const removeDiv = document.querySelector(name);        // grab div to remove
+   if (removeDiv) {                                       // check if div exists
+      removeDiv.parentElement.removeChild(removeDiv);     // remove div
+   }
+}
 
-// list is studentListItems
-// num is showItems
-const appendPageLinks = (list, num) => {
+
+   // list is studentListItems
+   // num is showItems
+const appendPageLinks = (list) => {
    const page = document.querySelector('.page');     // grab div.page to append div.pagination
    
    const paginationDiv = document.createElement('div');     // create pagination div
@@ -42,7 +50,7 @@ const appendPageLinks = (list, num) => {
    paginationDiv.appendChild(paginationList);               // append ul to div
 
                                                       // determine how many pages are needed
-   const numOfPages = Math.ceil(list.length/num);     // studentListItems / showItems = numOfPages
+   const numOfPages = Math.ceil(list.length/showItems);     // studentListItems / showItems = numOfPages
                                                       // (example) 50 / 10 = 5    
 
    for (let i = 0; i < numOfPages; i++) {                          // create loop to determine number of list items
@@ -78,23 +86,77 @@ const appendPageLinks = (list, num) => {
 
 // ========== EXCEEDS EXPECTATIONS SECTION ========== //
 const appendSearch = () => {
+   const page = document.querySelector('.page');     // grab div.page to append div.pagination
+
    const pageHeader = document.querySelector('.page-header');      // grab page header div
-   const searchBar = document.createElement('input');              // create input element
-   searchBar.type = 'text';                                        // set input type
-   searchBar.className = 'student-search';                         // set id
-   searchBar.placeholder = 'Search for a student!';                // set placeholder
-   pageHeader.appendChild(searchBar);                              // append searchBar to pageHeader
-
-   const searchButton = document.createElement('button');     // create search button
-   searchButton.className = 'student-search';
-   searchButton.textContent = 'SEARCH';
-   searchBar.insertAdjacentElement('beforebegin', searchButton);
-   console.log(searchBar);
-}
-
-const filter = () => {
+   const searchDiv = document.createElement('div');                // create div
+   searchDiv.className = 'student-search'                          // set div class
+   pageHeader.appendChild(searchDiv);                              // append div to header
    
+   const searchBar = document.createElement('input');     // create input element
+   searchBar.type = 'text';                               // set input type
+   searchBar.placeholder = 'Search for a student!';       // set placeholder
+   searchDiv.appendChild(searchBar);                      // append searchBar to pageHeader
+
+   const searchButton = document.createElement('button');         // create search button
+   searchButton.textContent = 'SEARCH';                           // set button text content
+   searchBar.insertAdjacentElement('afterend', searchButton);     // insert after search input
+
+   const searchAgain = document.createElement('h1');                                // create header
+   searchAgain.textContent = `Sorry, no students match. Please search again.`;      // fill header
+   searchAgain.style.display = 'none';                                              // set display to none
+   pageHeader.insertAdjacentElement('afterend', searchAgain);                       // insert after header
+
+   let newList = [];
+
+   const filter = (list) => {     // create filter function
+      const inputFilter = searchBar.value.toLowerCase();     // grab input value
+      newList = [];
+
+      for (let i = 0; i < list.length; i++) {                                                     // loop over list of students
+         let student = list[i];                                                                   // grab student
+         const studentName = list[i].firstElementChild.firstElementChild.nextElementSibling;      // grab students name node
+         const nameValue = studentName.textContent;                                               // store the text content
+
+         if (nameValue.toLowerCase().indexOf(inputFilter) > -1) {     // check value against filter
+            student.style.display = '';                               // if a match, display is empty
+            newList.push(student);                                    // push student onto new list
+         } else {
+            student.style.display = 'none';
+         };
+      }
+   };
+
+   page.addEventListener('click', (e) => {          // listen for click
+      if (e.target.tagName === 'BUTTON') {          // on search button
+         filter(studentList);                       // call filter
+         showPage(newList, 1);                      // call showPage with new list
+         divRemoval('.pagination');                 // remove pagination links div
+         appendPageLinks(newList, showItems);       // append new pagination links
+         if (newList.length === 0) {                // if there are no students in the new list
+            searchAgain.style.display = '';         // display header message
+         } else {                                   // else
+            searchAgain.style.display = 'none';     // hide header message
+         }
+      }
+   });
+
+   // page.addEventListener('keyup', (e) => {          // listen for keyUp
+   //    if (e.target.tagName === 'INPUT') {           // on input field
+   //       filter(studentList);                       // call filter
+   //       showPage(newList, 1);                      // call showPage with new list
+   //       divRemoval('.pagination');                 // remove pagination links div
+   //       appendPageLinks(newList, showItems);       // append new pagination links
+   //       if (newList.length === 0) {                // if there are no students in the new list
+   //          searchAgain.style.display = '';         // display header message
+   //       } else {                                   // else
+   //          searchAgain.style.display = 'none';     // hide header message
+   //       }
+   //    }
+   // });
 }
+
+
 
 
 // ========== FUNCTION CALLS ========== //
