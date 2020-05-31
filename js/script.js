@@ -4,15 +4,20 @@ FSJS project 2 - List Filter and Pagination
 ******************************************/
 
 // ========== LOAD HTML FIRST ========== //
+
 window.addEventListener('DOMContentLoaded', () => {
 
 
+
 // ========== GLOBAL VARIABLES ========== //
+
 const studentList = document.querySelectorAll('.student-item'); // grab list of students
 const showItems = 10; // show 10 students
 
 
+
 // ========== FUNCTIONS ========== //
+
    // list is studentListItems
    // page is the current page
 const showPage = (list, page) => {
@@ -84,7 +89,9 @@ const appendPageLinks = (list) => {
 }
 
 
+
 // ========== EXCEEDS EXPECTATIONS SECTION ========== //
+
 const appendSearch = () => {
    const page = document.querySelector('.page');     // grab div.page to append div.pagination
 
@@ -141,6 +148,8 @@ const appendSearch = () => {
       }
    });
 
+
+   // ========== THIS IS KEYUP FUNCTIONALITY I ADDED FOR FUN ========== //
    // page.addEventListener('keyup', (e) => {          // listen for keyUp
    //    if (e.target.tagName === 'INPUT') {           // on input field
    //       filter(studentList);                       // call filter
@@ -157,11 +166,9 @@ const appendSearch = () => {
 }
 
 
-
-
 // ========== FUNCTION CALLS ========== //
-showPage(studentList, 1);
-appendPageLinks(studentList, showItems);
-appendSearch();
+showPage(studentList, 1);                    // initialize showPage
+appendPageLinks(studentList, showItems);     // initialize appendPageLinks
+appendSearch();                              // initialize appendSearch
 
 });
