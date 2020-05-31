@@ -99,7 +99,7 @@ const appendSearch = () => {
    const searchDiv = document.createElement('div');                // create div
    searchDiv.className = 'student-search'                          // set div class
    pageHeader.appendChild(searchDiv);                              // append div to header
-   
+
    const searchBar = document.createElement('input');     // create input element
    searchBar.type = 'text';                               // set input type
    searchBar.placeholder = 'Search for a student!';       // set placeholder
@@ -108,6 +108,10 @@ const appendSearch = () => {
    const searchButton = document.createElement('button');         // create search button
    searchButton.textContent = 'SEARCH';                           // set button text content
    searchBar.insertAdjacentElement('afterend', searchButton);     // insert after search input
+
+   const resetButton = document.createElement('button');         // create search button
+   resetButton.textContent = 'RESET';                           // set button text content
+   searchButton.insertAdjacentElement('afterend', resetButton);     // insert after search input
 
    const searchAgain = document.createElement('h1');                                // create header
    searchAgain.textContent = `Sorry, no students match. Please search again.`;      // fill header
@@ -135,7 +139,32 @@ const appendSearch = () => {
    };
 
    page.addEventListener('click', (e) => {          // listen for click
-      if (e.target.tagName === 'BUTTON') {          // on search button
+      if (e.target.textContent === 'SEARCH') {          // on search button
+         filter(studentList);                       // call filter
+         showPage(newList, 1);                      // call showPage with new list
+         divRemoval('.pagination');                 // remove pagination links div
+         appendPageLinks(newList, showItems);       // append new pagination links
+         searchBar.value = '';
+         if (newList.length === 0) {                // if there are no students in the new list
+            searchAgain.style.display = '';         // display header message
+         } else {                                   // else
+            searchAgain.style.display = 'none';     // hide header message
+         }
+      }
+   });
+
+   page.addEventListener('click', (e) => {          // listen for click
+      if (e.target.textContent === 'RESET') {          // on search button
+         showPage(studentList, 1);                      // call showPage with new list
+         divRemoval('.pagination');                 // remove pagination links div
+         appendPageLinks(studentList, showItems);       // append new pagination links
+      }
+   });
+
+
+   // ========== THIS IS KEYUP FUNCTIONALITY I ADDED FOR FUN ========== //
+   page.addEventListener('keyup', (e) => {          // listen for keyUp
+      if (e.target.tagName === 'INPUT') {           // on input field
          filter(studentList);                       // call filter
          showPage(newList, 1);                      // call showPage with new list
          divRemoval('.pagination');                 // remove pagination links div
@@ -147,22 +176,6 @@ const appendSearch = () => {
          }
       }
    });
-
-
-   // ========== THIS IS KEYUP FUNCTIONALITY I ADDED FOR FUN ========== //
-   // page.addEventListener('keyup', (e) => {          // listen for keyUp
-   //    if (e.target.tagName === 'INPUT') {           // on input field
-   //       filter(studentList);                       // call filter
-   //       showPage(newList, 1);                      // call showPage with new list
-   //       divRemoval('.pagination');                 // remove pagination links div
-   //       appendPageLinks(newList, showItems);       // append new pagination links
-   //       if (newList.length === 0) {                // if there are no students in the new list
-   //          searchAgain.style.display = '';         // display header message
-   //       } else {                                   // else
-   //          searchAgain.style.display = 'none';     // hide header message
-   //       }
-   //    }
-   // });
 }
 
 
